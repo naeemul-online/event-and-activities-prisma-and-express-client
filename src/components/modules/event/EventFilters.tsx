@@ -4,6 +4,7 @@ import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
 import RefreshButton from "@/components/shared/RefreshButton";
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
+import DateFilter from "@/components/ui/DateFilter";
 import { ICategory } from "@/types/events.interface";
 
 interface EventsFilterProps {
@@ -25,12 +26,14 @@ const EventFilters = ({ categories }: EventsFilterProps) => {
           }))}
         />
 
+        <DateFilter paramName="startDate" label="Start Date" />
+        <DateFilter paramName="endDate" label="End Date" />
+
+        <SearchFilter paramName="location" placeholder="Search by location" />
+
         {/* Clear All Filters */}
         <div className="flex items-center gap-3">
-          <SearchFilter
-            paramName="searchTerm"
-            placeholder="Search doctors..."
-          />
+          <SearchFilter paramName="searchTerm" placeholder="Search Events..." />
           <RefreshButton />
         </div>
 

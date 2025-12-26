@@ -29,9 +29,41 @@ export interface IEvents {
   fee: string; // Note: In the JSON this is a string "100"
   currency: string;
   image: string;
-  status: "OPEN" | "CLOSED" | string;
+  status: "OPEN" | "FULL" | "CANCELLED";
   createdAt: string;
   updatedAt: string;
-  category: ICategory[];
+  category?: ICategory;
   host: IHost;
+}
+
+export interface IEvent {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  location: string;
+  minParticipants: number;
+  maxParticipants: number;
+  hostId: string;
+  categoryId: string;
+  fee: string;
+  currency: string;
+  image: string;
+  status: "OPEN" | "FULL" | "CANCELLED";
+  createdAt: string;
+  updatedAt: string;
+  category: {
+    name: string;
+  };
+  host: {
+    email: string;
+    profile: {
+      id: string;
+      fullName: string;
+      bio: string;
+      image: string | null;
+      location: string;
+      userId: string;
+    };
+  };
 }

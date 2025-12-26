@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getIconComponent } from "@/lib/icon-mapper";
 import { cn } from "@/lib/utils";
@@ -57,14 +56,14 @@ const DashboardSidebarContent = ({
                     >
                       <Icon className="h-4 w-4" />
                       <span className="flex-1">{item.title}</span>
-                      {item.badge && (
+                      {/* {item.badge && (
                         <Badge
                           variant={isActive ? "secondary" : "default"}
                           className="ml-auto"
                         >
                           {item.badge}
                         </Badge>
-                      )}
+                      )} */}
                     </Link>
                   );
                 })}

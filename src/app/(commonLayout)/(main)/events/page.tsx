@@ -1,16 +1,13 @@
+import EventCards from "@/components/modules/event/EventCards";
 import EventFilters from "@/components/modules/event/EventFilters";
-import EventManagementPageHeader from "@/components/modules/event/eventsPageHeader";
+import { EventsLoading } from "@/components/shared/EventLoading";
+import TablePagination from "@/components/shared/TablePagination";
 import { queryStringFormatter } from "@/lib/formatters";
 import {
   getAlEvent,
   getEventCategories,
 } from "@/services/event/eventsManagements";
-
-export const metadata = {
-  title: "Browse Events | Events & Activities",
-  description:
-    "Discover and search for events near you. Filter by category, date, and location.",
-};
+import { Suspense } from "react";
 
 const EventsPage = async ({
   searchParams,
@@ -30,24 +27,16 @@ const EventsPage = async ({
   );
 
   return (
-    <div className="min-h-screen">
-      <main className="py-12">
-        <EventManagementPageHeader
-          eventCategories={categoryResult.data || []}
-        />
-        <EventFilters categories={categoryResult?.data || []} />
+    <div className="space-y-6">
+      <EventFilters categories={categoryResult?.data || []} />
 
-        {/* <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
-          <EventsTable
-            events={eventResult.data || []}
-            eventCategories={categoryResult.data || []}
-          />
-          <TablePagination
-            currentPage={eventResult?.meta?.page || 1}
-            totalPages={totalPages || 1}
-          />
-        </Suspense> */}
-      </main>
+      <Suspense fallback={<EventsLoading />}>
+        <EventCards events={eventResult.data || []} />
+        <TablePagination
+          currentPage={eventResult?.meta?.page || 1}
+          totalPages={totalPages || 1}
+        />
+      </Suspense>
     </div>
   );
 };
