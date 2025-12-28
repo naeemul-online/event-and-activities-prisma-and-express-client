@@ -9,8 +9,8 @@ interface EventCardProps {
 const EventCards = ({ events }: EventCardProps) => {
   return (
     <>
-      <div className="rounded-lg border relative">
-        <div className="mb-8">
+      <div className="rounded-lg border relative text-center">
+        <div className="mb-4 p-8">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
             Discover Events
           </h1>
@@ -19,7 +19,7 @@ const EventCards = ({ events }: EventCardProps) => {
           </p>
         </div>
 
-        <div className="">
+        <div className="p-8">
           {events.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <h3>No events found</h3>

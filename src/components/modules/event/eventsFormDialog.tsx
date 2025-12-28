@@ -39,7 +39,6 @@ const EventsFormDialog = ({
   event,
   categories,
 }: IEventManagementFormDialogProps) => {
-  console.log(event);
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isEdit = !!event;

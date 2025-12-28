@@ -16,6 +16,41 @@ export interface IHost {
   profile: IHostProfile;
 }
 
+export type ParticipantStatus = "PENDING" | "APPROVED" | "REJECTED";
+export type UserRole = "USER" | "HOST" | "ADMIN";
+
+export interface IProfile {
+  id: string;
+  fullName: string;
+  bio?: string | null;
+  image?: string | null;
+  location?: string | null;
+  userId: string;
+  user: IUser;
+}
+
+export interface IEventParticipant {
+  id: number;
+  eventId: string;
+  userId: string;
+  status: ParticipantStatus;
+  joinedAt?: string | null;
+  event?: IEvents;
+  user?: IUser;
+}
+
+export interface IUser {
+  id: string;
+  email: string;
+  password?: string;
+  role: UserRole;
+  profile: IProfile;
+  createdAt?: string;
+  updatedAt?: string;
+  events?: IEvents[];
+  eventParticipants?: IEventParticipant[];
+}
+
 export interface IEvents {
   id: string;
   title: string;
@@ -24,7 +59,7 @@ export interface IEvents {
   location: string;
   minParticipants: number;
   maxParticipants: number;
-  hostId: string;
+  eventParticipants?: IEventParticipant[];
   categoryId: string;
   fee: string; // Note: In the JSON this is a string "100"
   currency: string;
@@ -44,6 +79,7 @@ export interface IEvent {
   location: string;
   minParticipants: number;
   maxParticipants: number;
+
   hostId: string;
   categoryId: string;
   fee: string;

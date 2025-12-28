@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { IEvents } from "@/types/events.interface";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
+import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -13,7 +14,6 @@ interface EventCardProps {
 }
 
 function EventCard({ event }: EventCardProps) {
-  const { image, title, category, date, host, location, status, fee } = event;
   const statusColors = {
     OPEN: "bg-primary/10 text-primary border-primary/20",
     FULL: "bg-orange-500/10 text-orange-500 border-orange-500/20",
@@ -89,9 +89,14 @@ function EventCard({ event }: EventCardProps) {
                 ? `${event.maxParticipants - event.minParticipants} spots left`
                 : "Limited spots"}
             </p>
-            <Button className="w-full" disabled={event.status !== "OPEN"}>
-              {event.status === "OPEN" ? "Join Event" : event.status}
-            </Button>
+            <Link href={`/events/${event.id}`}>
+              <Button
+                className="w-full cursor-pointer"
+                disabled={event.status !== "OPEN"}
+              >
+                {event.status === "OPEN" ? "Join Event" : event.status}
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

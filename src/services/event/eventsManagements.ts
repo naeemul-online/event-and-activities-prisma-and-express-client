@@ -91,6 +91,24 @@ export async function getAlEvent(queryString?: string) {
   }
 }
 
+export async function singleEvent(id: string) {
+  try {
+    const response = await serverFetch.get(`/event/${id}`);
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+}
+
 export async function getMyEvents(queryString?: string) {
   try {
     const searchParams = new URLSearchParams(queryString);
@@ -127,6 +145,24 @@ export async function getMyEvents(queryString?: string) {
 export async function getEventCategories() {
   try {
     const response = await serverFetch.get("/event/all-events-categories");
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+}
+
+export async function joinEvent(id: string) {
+  try {
+    const response = await serverFetch.post(`/event/${id}/join`);
     const result = await response.json();
     return result;
   } catch (error: any) {

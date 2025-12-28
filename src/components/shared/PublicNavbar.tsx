@@ -7,7 +7,7 @@ import NavbarAuthButtons from "./NavAuthButton";
 
 export async function PublicNavbar() {
   const navItems = [
-    { href: "events", label: "Explore Events" },
+    { href: "/events", label: "Explore Events" },
     { href: "/host/dashboard/my-events", label: "Become a Host" },
   ];
 

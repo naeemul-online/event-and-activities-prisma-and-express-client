@@ -1,7 +1,10 @@
 import { UserRole } from "@/lib/auth-utils";
+import { IProfile } from "./events.interface";
 
 export interface UserInfo {
-    name: string;
-    email: string;
-    role: UserRole;
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  profile: IProfile;
 }
