@@ -16,7 +16,7 @@ export interface IHost {
   profile: IHostProfile;
 }
 
-export type ParticipantStatus = "PENDING" | "APPROVED" | "REJECTED";
+export type ParticipantStatus = "PENDING" | " JOINED" | "LEFT";
 export type UserRole = "USER" | "HOST" | "ADMIN";
 
 export interface IProfile {
@@ -69,6 +69,7 @@ export interface IEvents {
   updatedAt: string;
   category?: ICategory;
   host: IHost;
+  paymentStatus?: "PAID" | "PENDING";
 }
 
 export interface IEvent {

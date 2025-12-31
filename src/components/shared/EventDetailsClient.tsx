@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { joinEvent } from "@/services/event/eventsManagements";
-import type { IEvents } from "@/types/events.interface";
+import { joinEvent, leaveEvent } from "@/services/event/eventsManagements";
+import type { IEvents, ParticipantStatus } from "@/types/events.interface";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -23,11 +23,13 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
 
+import { usePathname, useRouter } from "next/navigation";
+
 interface IParticipant {
   id: string;
   userId: string;
   eventId: string;
-  status: string;
+  status: ParticipantStatus;
   joinedAt: string;
   user: {
     email: string;
@@ -48,9 +50,16 @@ interface EventDetailsClientProps {
 }
 
 export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [actionLoading, setActionLoading] = useState(false);
 
-  const isJoined = event.eventParticipants?.some((p) => p.userId === userId);
+  const participant = event.eventParticipants?.find((p) => p.userId === userId);
+
+  const participantStatus = participant?.status as string;
+
+  const paymentStatus = event.paymentStatus;
 
   const statusColors = {
     OPEN: "bg-primary/10 text-primary border-primary/20",
@@ -64,25 +73,64 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
   const spotsLeft = event.maxParticipants - participantCount;
 
   const handleJoinEvent = async () => {
+    // 🔐 Not logged in
+    if (!userId) {
+      toast.info("Please login to join this event");
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      return;
+    }
+
     try {
       setActionLoading(true);
+
       const res = await joinEvent(event.id);
+      console.log(res.data);
 
-      if (res?.success && res?.data?.paymentUrl) {
-        toast.success(res.message);
-        setTimeout(() => {
-          window.location.href = res.data.paymentUrl;
-        }, 800);
+      if (!res?.success) {
+        toast.error(res?.message || "Failed to join event");
+        return;
       }
 
-      if (!res?.success && !res?.data?.paymentUrl) {
-        toast.error(res.message);
+      // 🟡 Payment pending → redirect silently
+      if (res.data?.paymentStatus === "PENDING") {
+        window.location.href = res.data.paymentUrl;
+        return;
+      }
+
+      // 🆕 New join
+      if (res.data?.paymentStatus === "NEW") {
+        toast.success("Redirecting to payment...");
         setTimeout(() => {
           window.location.href = res.data.paymentUrl;
-        }, 800);
+        }, 500);
+        return;
       }
+
+      // 🟢 Paid already
+      toast.success("You have already joined this event");
+      router.refresh();
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleLeaveEvent = async () => {
+    try {
+      setActionLoading(true);
+
+      const res = await leaveEvent(event.id);
+
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
+
+      toast.success("You left the event");
+      router.refresh();
+    } catch {
+      toast.error("Failed to leave event");
     } finally {
       setActionLoading(false);
     }
@@ -260,14 +308,20 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
                   <Button
                     className="w-full"
                     size="lg"
-                    disabled={event.status !== "OPEN" || actionLoading}
-                    onClick={handleJoinEvent}
-                    variant={actionLoading ? "outline" : "default"}
+                    variant={
+                      participantStatus === "JOINED" ? "destructive" : "default"
+                    }
+                    onClick={
+                      participantStatus === "JOINED"
+                        ? handleLeaveEvent
+                        : handleJoinEvent
+                    }
+                    disabled={actionLoading}
                   >
-                    {actionLoading
-                      ? "Processing..."
-                      : isJoined
-                      ? "Already Joined"
+                    {participantStatus === "JOINED"
+                      ? "Leave Event"
+                      : participantStatus === "PENDING"
+                      ? "Complete Payment"
                       : "Join Event"}
                   </Button>
 
@@ -392,10 +446,3 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
     </>
   );
 }
-
-/* 
-
-
-
-
-*/

@@ -23,8 +23,6 @@ function EventCard({ event }: EventCardProps) {
   const formattedDate = format(new Date(event.date), "MMM dd, yyyy");
   const formattedTime = format(new Date(event.date), "h:mm a");
 
-  console.log(event?.category?.name);
-
   return (
     <>
       <Card className="overflow-hidden group hover:shadow-xl transition-all">
