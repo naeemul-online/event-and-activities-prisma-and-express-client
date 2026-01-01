@@ -6,15 +6,19 @@ import { ICategory, IEvents } from "@/types/events.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { EventsColumns } from "./eventsColumns";
+
+import { UserRole } from "@/lib/auth-utils";
+import { getEventsColumns } from "./eventsColumns";
 import EventsFormDialog from "./eventsFormDialog";
 
 interface EventsTableProps {
   events: IEvents[];
   eventCategories?: ICategory[];
+  mode?: UserRole;
 }
 
-const EventsTable = ({ events, eventCategories }: EventsTableProps) => {
+const EventsTable = ({ events, eventCategories, mode }: EventsTableProps) => {
+  const isHost = mode === "HOST";
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [deletingEvent, setDeletingEvent] = useState<IEvents | null>(null);
@@ -57,9 +61,10 @@ const EventsTable = ({ events, eventCategories }: EventsTableProps) => {
     <>
       <ManagementTable
         data={events}
-        columns={EventsColumns}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        columns={getEventsColumns(mode!)}
+        onView={(event) => router.push(`/events/${event.id}`)}
+        onEdit={isHost ? handleEdit : undefined}
+        onDelete={isHost ? handleDelete : undefined}
         getRowKey={(events) => events.id}
         emptyMessage="No events found"
       />

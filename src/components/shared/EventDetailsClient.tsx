@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
 
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 interface IParticipant {
@@ -59,7 +60,7 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
 
   const participantStatus = participant?.status as string;
 
-  const paymentStatus = event.paymentStatus;
+  // const paymentStatus = event.paymentStatus;
 
   const statusColors = {
     OPEN: "bg-primary/10 text-primary border-primary/20",
@@ -142,11 +143,13 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Hero Image */}
           <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-lg overflow-hidden">
-            <img
+            <Image
               src={
                 event.image ||
                 "/placeholder.svg?height=500&width=1200&query=event"
               }
+              width={500}
+              height={500}
               alt={event.title}
               className="w-full h-full object-cover"
             />
@@ -309,7 +312,11 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
                     className="w-full"
                     size="lg"
                     variant={
-                      participantStatus === "JOINED" ? "destructive" : "default"
+                      participantStatus === "JOINED"
+                        ? "destructive"
+                        : participantStatus === "PENDING"
+                        ? "secondary"
+                        : "default"
                     }
                     onClick={
                       participantStatus === "JOINED"
@@ -321,7 +328,7 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
                     {participantStatus === "JOINED"
                       ? "Leave Event"
                       : participantStatus === "PENDING"
-                      ? "Complete Payment"
+                      ? "Pending Payment"
                       : "Join Event"}
                   </Button>
 

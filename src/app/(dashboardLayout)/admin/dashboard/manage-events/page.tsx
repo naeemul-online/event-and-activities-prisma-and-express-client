@@ -5,7 +5,7 @@ import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
 import {
-  getAlEvent,
+  getAllEvents,
   getEventCategories,
 } from "@/services/event/eventsManagements";
 import { Suspense } from "react";
@@ -19,7 +19,7 @@ const EventsManagementPage = async ({
 
   const queryString = await queryStringFormatter(searchParamsObj);
 
-  const eventResult = await getAlEvent(queryString);
+  const eventResult = await getAllEvents(queryString);
 
   const categoryResult = await getEventCategories();
 

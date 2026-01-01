@@ -58,13 +58,46 @@ export async function createEvent(_prevState: any, formData: FormData) {
   }
 }
 
-export async function getAlEvent(queryString?: string) {
+export async function getAllEvents(queryString?: string) {
   try {
     const searchParams = new URLSearchParams(queryString);
     const page = searchParams.get("page") || "1";
     const searchTerm = searchParams.get("searchTerm") || "all";
     const response = await serverFetch.get(
       `/event/all-events${queryString ? `?${queryString}` : ""}`,
+      {
+        next: {
+          tags: [
+            "events-list",
+            `events-page-${page}`,
+            `events-search-${searchTerm}`,
+          ],
+          revalidate: 180, // faster doctor list updates
+        },
+      }
+    );
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+}
+
+export async function getUserMyEvent(queryString?: string) {
+  try {
+    const searchParams = new URLSearchParams(queryString);
+    const page = searchParams.get("page") || "1";
+    const searchTerm = searchParams.get("searchTerm") || "all";
+    const response = await serverFetch.get(
+      `/event/joined-events${queryString ? `?${queryString}` : ""}`,
       {
         next: {
           tags: [
