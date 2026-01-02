@@ -16,7 +16,6 @@ export default async function EventDetailsPage({
 }: EventDetailsPageProps) {
   const { id } = await params;
   const res = await singleEvent(id);
-
   const currentUser = await getUserInfo();
 
   return (
