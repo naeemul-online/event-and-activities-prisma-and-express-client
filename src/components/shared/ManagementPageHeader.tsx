@@ -1,6 +1,6 @@
 "use client";
+
 import { LucideIcon, Plus } from "lucide-react";
-import React from "react";
 import { Button } from "../ui/button";
 
 interface ManagementPageHeaderProps {
@@ -12,6 +12,7 @@ interface ManagementPageHeaderProps {
     onClick: () => void;
   };
   children?: React.ReactNode;
+  mode?: "ADMIN" | "HOST" | "USER";
 }
 
 const ManagementPageHeader = ({
@@ -19,8 +20,11 @@ const ManagementPageHeader = ({
   description,
   action,
   children,
+  mode,
 }: ManagementPageHeaderProps) => {
-  const Icon = action?.icon || Plus;
+  const Icon = action?.icon ?? Plus;
+  const canShowAction = mode === "HOST" && action;
+
   return (
     <div className="flex items-center justify-between">
       <div>
@@ -29,12 +33,14 @@ const ManagementPageHeader = ({
           <p className="text-muted-foreground mt-1">{description}</p>
         )}
       </div>
-      {action && (
+
+      {canShowAction && (
         <Button onClick={action.onClick}>
           <Icon className="mr-2 h-4 w-4" />
           {action.label}
         </Button>
       )}
+
       {children}
     </div>
   );

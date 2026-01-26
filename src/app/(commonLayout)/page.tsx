@@ -7,10 +7,16 @@ import { HeroSection } from "@/components/modules/Home/hero-section";
 import { HostsSection } from "@/components/modules/Home/hosts-section";
 import { HowItWorksSection } from "@/components/modules/Home/how-its-work";
 import { TestimonialsSection } from "@/components/modules/Home/testimonials-section";
+import { getAllEvents } from "@/services/event/eventsManagements";
+import { getTopRatedHosts } from "@/services/hosts/host.service";
 
 import Head from "next/head";
 
-export default function Home() {
+export default async function Home() {
+  const events = await getAllEvents();
+
+  const TopHosts = await getTopRatedHosts();
+
   return (
     <>
       <Head>
@@ -28,9 +34,9 @@ export default function Home() {
         <HeroSection />
         <HowItWorksSection />
         <CategoriesSection />
-        <FeaturedEventsSection />
+        <FeaturedEventsSection events={events.data} />
         <FeaturesSection />
-        <HostsSection />
+        <HostsSection hosts={TopHosts?.data} />
         <TestimonialsSection />
         <CTASection />
       </main>

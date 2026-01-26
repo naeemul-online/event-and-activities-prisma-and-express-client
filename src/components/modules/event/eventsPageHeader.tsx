@@ -1,7 +1,8 @@
 "use client";
 
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
-import { ICategory, IEvents } from "@/types/events.interface";
+import { UserRole } from "@/lib/auth-utils";
+import { ICategory } from "@/types/events.interface";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -9,10 +10,12 @@ import EventsFormDialog from "./eventsFormDialog";
 
 interface EventsManagementPageHeaderProps {
   eventCategories?: ICategory[];
+  mode?: UserRole;
 }
 
 const EventManagementPageHeader = ({
   eventCategories,
+  mode,
 }: EventsManagementPageHeaderProps) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -53,6 +56,7 @@ const EventManagementPageHeader = ({
           icon: Plus,
           onClick: handleOpenDialog,
         }}
+        mode={mode}
       />
     </>
   );

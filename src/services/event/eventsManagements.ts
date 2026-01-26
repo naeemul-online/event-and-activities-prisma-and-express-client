@@ -58,13 +58,78 @@ export async function createEvent(_prevState: any, formData: FormData) {
   }
 }
 
-export async function getAlEvent(queryString?: string) {
+export async function submitEventReview(payload: {
+  eventId: string;
+  rating: number;
+  comment?: string;
+}) {
+  try {
+    const response = await serverFetch.post("/event/review", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload), // Stringify the payload
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to submit review. Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.error("Error submitting review:", error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development" && error instanceof Error
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+}
+
+export async function getAllEvents(queryString?: string) {
   try {
     const searchParams = new URLSearchParams(queryString);
     const page = searchParams.get("page") || "1";
     const searchTerm = searchParams.get("searchTerm") || "all";
     const response = await serverFetch.get(
       `/event/all-events${queryString ? `?${queryString}` : ""}`,
+      {
+        next: {
+          tags: [
+            "events-list",
+            `events-page-${page}`,
+            `events-search-${searchTerm}`,
+          ],
+          revalidate: 180, // faster doctor list updates
+        },
+      }
+    );
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+}
+
+export async function getUserMyEvent(queryString?: string) {
+  try {
+    const searchParams = new URLSearchParams(queryString);
+    const page = searchParams.get("page") || "1";
+    const searchTerm = searchParams.get("searchTerm") || "all";
+    const response = await serverFetch.get(
+      `/event/joined-events${queryString ? `?${queryString}` : ""}`,
       {
         next: {
           tags: [

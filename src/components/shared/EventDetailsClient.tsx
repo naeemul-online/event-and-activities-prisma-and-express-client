@@ -2,7 +2,11 @@
 
 import { cn } from "@/lib/utils";
 import { joinEvent, leaveEvent } from "@/services/event/eventsManagements";
-import type { IEvents, ParticipantStatus } from "@/types/events.interface";
+import type {
+  IEvents,
+  IReview,
+  ParticipantStatus,
+} from "@/types/events.interface";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -23,7 +27,9 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
 
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { ReviewForm } from "../modules/event/ReviewForm";
 
 interface IParticipant {
   id: string;
@@ -45,7 +51,7 @@ interface IParticipant {
 }
 
 interface EventDetailsClientProps {
-  event: IEvents & { participants?: IParticipant[] };
+  event: IEvents & { participants?: IParticipant[]; reviews?: IReview[] };
   userId: string;
 }
 
@@ -59,7 +65,7 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
 
   const participantStatus = participant?.status as string;
 
-  const paymentStatus = event.paymentStatus;
+  // const paymentStatus = event.paymentStatus;
 
   const statusColors = {
     OPEN: "bg-primary/10 text-primary border-primary/20",
@@ -71,6 +77,16 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
   const formattedTime = format(new Date(event.date), "h:mm a");
   const participantCount = event.eventParticipants?.length || 0;
   const spotsLeft = event.maxParticipants - participantCount;
+
+  console.log("check review", event);
+
+  const hasReviewed = event.reviews?.some((review) => review.userId === userId);
+
+  const canReview =
+    !!userId &&
+    participantStatus === "JOINED" &&
+    new Date(event.date) < new Date() &&
+    !hasReviewed;
 
   const handleJoinEvent = async () => {
     // 🔐 Not logged in
@@ -142,11 +158,13 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Hero Image */}
           <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-lg overflow-hidden">
-            <img
+            <Image
               src={
                 event.image ||
                 "/placeholder.svg?height=500&width=1200&query=event"
               }
+              width={500}
+              height={500}
               alt={event.title}
               className="w-full h-full object-cover"
             />
@@ -279,6 +297,87 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
                   )}
                 </CardContent>
               </Card>
+
+              {/* Review Form */}
+              {canReview && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Write a Review</CardTitle>
+                  </CardHeader>
+
+                  <CardContent>
+                    <ReviewForm
+                      eventId={event.id}
+                      onSuccess={() => router.refresh()}
+                    />
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Reviews Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Reviews ({event.reviews?.length || 0})</CardTitle>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  {event.reviews && event.reviews.length > 0 ? (
+                    event.reviews.map((review) => (
+                      <div
+                        key={review.id}
+                        className="rounded-lg border p-4 space-y-2"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <Avatar>
+                              <AvatarImage
+                                src={
+                                  review.reviewer?.profile.image || undefined
+                                }
+                              />
+                              <AvatarFallback>
+                                {review.reviewer?.profile?.fullName
+                                  ?.split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+
+                            <p className="font-medium">
+                              {review.reviewer?.profile?.fullName}
+                            </p>
+                          </div>
+
+                          <div className="flex gap-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span
+                                key={i}
+                                className={
+                                  i < review.rating!
+                                    ? "text-yellow-400"
+                                    : "text-muted"
+                                }
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {review.comment && (
+                          <p className="text-sm text-muted-foreground">
+                            {review.comment}
+                          </p>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-6">
+                      No reviews yet.
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
             </div>
 
             {/* Sidebar */}
@@ -309,7 +408,11 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
                     className="w-full"
                     size="lg"
                     variant={
-                      participantStatus === "JOINED" ? "destructive" : "default"
+                      participantStatus === "JOINED"
+                        ? "destructive"
+                        : participantStatus === "PENDING"
+                        ? "secondary"
+                        : "default"
                     }
                     onClick={
                       participantStatus === "JOINED"
@@ -321,7 +424,7 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
                     {participantStatus === "JOINED"
                       ? "Leave Event"
                       : participantStatus === "PENDING"
-                      ? "Complete Payment"
+                      ? "Pending Payment"
                       : "Join Event"}
                   </Button>
 

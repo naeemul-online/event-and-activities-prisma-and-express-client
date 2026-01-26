@@ -70,6 +70,7 @@ export interface IEvents {
   category?: ICategory;
   host: IHost;
   paymentStatus?: "PAID" | "PENDING";
+  reviews?: IReview;
 }
 
 export interface IEvent {
@@ -103,4 +104,16 @@ export interface IEvent {
       userId: string;
     };
   };
+}
+
+export interface IReview {
+  id: string;
+  eventId: string;
+  rating?: number;
+  userId: string;
+  hostId: string;
+  comment?: string | null;
+  createdAt: Date;
+  event?: IEvent;
+  reviewer?: IUser;
 }
