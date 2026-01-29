@@ -34,7 +34,7 @@ export function HeroSection({ userInfo }: HeroSectionProps) {
                 </Button>
               </Link>
 
-              {userInfo?.role === "USER" && (
+              {!userInfo && (
                 <Link href="/host/dashboard/my-events">
                   <Button
                     size="lg"
