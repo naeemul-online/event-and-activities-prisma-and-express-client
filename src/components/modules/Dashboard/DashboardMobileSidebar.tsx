@@ -56,7 +56,7 @@ const DashboardMobileSidebar = ({
                         "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
                         isActive
                           ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
                       )}
                     >
                       <Icon className="h-4 w-4" />
@@ -83,13 +83,13 @@ const DashboardMobileSidebar = ({
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
             <span className="text-sm font-semibold text-primary">
-              {userInfo.name.charAt(0).toUpperCase()}
+              {userInfo?.name.charAt(0).toUpperCase()}
             </span>
           </div>
           <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-medium truncate">{userInfo.name}</p>
+            <p className="text-sm font-medium truncate">{userInfo?.name}</p>
             <p className="text-xs text-muted-foreground capitalize">
-              {userInfo.role.toLowerCase()}
+              {userInfo?.role.toLowerCase()}
             </p>
           </div>
         </div>

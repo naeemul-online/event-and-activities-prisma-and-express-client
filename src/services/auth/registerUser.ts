@@ -8,7 +8,7 @@ import { loginUser } from "./loginUser";
 
 export const registerUser = async (
   _currentState: any,
-  formData: any
+  formData: any,
 ): Promise<any> => {
   const interestsString = formData.get("interests") as string | null;
 
@@ -49,7 +49,7 @@ export const registerUser = async (
 
     const validatedPayload: any = zodValidator(
       payload,
-      registerPatientValidationZodSchema
+      registerPatientValidationZodSchema,
     ).data;
 
     const registerData = {

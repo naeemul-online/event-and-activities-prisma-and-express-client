@@ -2,33 +2,15 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-import { getUserInfo } from "@/services/auth/getUserInfo";
-import { UserRole } from "@/types/events.interface";
+import { UserInfo } from "@/types/user.interface";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-export function HeroSection() {
-  const [role, setRole] = useState<UserRole | null>(null);
-  const [loading, setLoading] = useState(true);
+interface HeroSectionProps {
+  userInfo: UserInfo | null;
+}
 
-  useEffect(() => {
-    async function loadUser() {
-      try {
-        const userInfo = await getUserInfo();
-        if (userInfo?.role) {
-          setRole(userInfo?.role ?? null);
-        }
-      } catch {
-        setRole(null);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadUser();
-  }, []);
-
+export function HeroSection({ userInfo }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden py-20 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,7 +34,7 @@ export function HeroSection() {
                 </Button>
               </Link>
 
-              {!loading && !role && (
+              {userInfo?.role === "USER" && (
                 <Link href="/host/dashboard/my-events">
                   <Button
                     size="lg"

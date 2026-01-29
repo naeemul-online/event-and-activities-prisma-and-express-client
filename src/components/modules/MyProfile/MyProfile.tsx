@@ -27,7 +27,7 @@ export default function MyProfile({ userInfo }: MyProfileProps) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const profile = userInfo.profile;
+  const profile = userInfo?.profile;
 
   // ---------------------------
   // Image Preview
@@ -93,7 +93,7 @@ export default function MyProfile({ userInfo }: MyProfileProps) {
                     src={previewImage || profile?.image || undefined}
                   />
                   <AvatarFallback className="text-3xl">
-                    {getInitials(profile?.fullName || userInfo.email)}
+                    {getInitials(profile?.fullName || userInfo?.email)}
                   </AvatarFallback>
                 </Avatar>
 
