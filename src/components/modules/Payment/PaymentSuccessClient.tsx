@@ -11,7 +11,15 @@ import { useEffect, useState } from "react";
 
 export function PaymentSuccessClient({ eventId }: { eventId: string }) {
   const router = useRouter();
-  const [event, setEvent] = useState<any>(null);
+  interface Event {
+    title: string;
+    date: string;
+    location: string;
+    fee: string;
+    currency: string;
+  }
+
+  const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
     if (!eventId) return;

@@ -45,11 +45,8 @@ export function CategoriesSection() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {categories.map((category, index) => (
-            <Link href="/event">
-              <Card
-                key={index}
-                className="group cursor-pointer transition-all hover:shadow-lg hover:scale-105 hover:border-primary/50"
-              >
+            <Link href="/event" key={index}>
+              <Card className="group cursor-pointer transition-all hover:shadow-lg hover:scale-105 hover:border-primary/50">
                 <CardHeader className="space-y-4">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <category.icon className="w-7 h-7 text-primary" />

@@ -34,14 +34,6 @@ export async function updateMyProfile(formData: FormData) {
       uploadFormData.append("file", fileData);
     }
 
-    console.log("---------:", uploadFormData);
-
-    // const file = formData.get("file");
-
-    // if (file instanceof File && file.size > 0) {
-    //   uploadFormData.append("file", file);
-    // }
-
     // -----------------------------
     // API Call
     // -----------------------------

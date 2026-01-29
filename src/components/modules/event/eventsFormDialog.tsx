@@ -42,7 +42,12 @@ const EventsFormDialog = ({
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isEdit = !!event;
-  const [selectedFile, setSelectedFile] = useState<File | string | null>(null);
+  // const [selectedFile, setSelectedFile] = useState<File | string | null>(null);
+
+  // Change it to this:
+  const [selectedFile, setSelectedFile] = useState<File | string | null>(
+    event?.image ? event.image : null
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -61,25 +66,13 @@ const EventsFormDialog = ({
   };
 
   const action = isEdit
-    ? (prevState: any, formData: FormData) =>
+    ? (prevState: Record<string, unknown>, formData: FormData) =>
         updateEvents(event!.id, prevState, formData)
     : createEvent;
 
   const [state, formAction, pending] = useActionState(action, null);
 
   const prevStateRef = useRef(state);
-
-  useEffect(() => {
-    if (open) {
-      if (isEdit && event?.image) {
-        // এডিট মোডে থাকলে ডাটাবেজ থেকে আসা ইমেজ দেখাবে
-        setSelectedFile(event.image);
-      } else {
-        // নতুন ইভেন্ট তৈরির সময় প্রিভিউ খালি করে দেবে
-        setSelectedFile(null);
-      }
-    }
-  }, [event, open, isEdit]);
 
   useEffect(() => {
     if (state === prevStateRef.current) return;

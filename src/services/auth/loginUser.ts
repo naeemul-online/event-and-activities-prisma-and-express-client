@@ -117,7 +117,7 @@ export const loginUser = async (
     if (error?.digest?.startsWith("NEXT_REDIRECT")) {
       throw error;
     }
-    console.log(error);
+
     return {
       success: false,
       message: `${

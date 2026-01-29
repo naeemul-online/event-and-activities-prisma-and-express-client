@@ -50,6 +50,8 @@ function ManagementTable<T>({
 }: ManagementTableProps<T>) {
   const hasActions = onView || onEdit || onDelete;
 
+  console.log("onEdit:", onEdit);
+
   return (
     <>
       <div className="rounded-lg border relative">

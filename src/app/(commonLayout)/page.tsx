@@ -14,7 +14,6 @@ import Head from "next/head";
 
 export default async function Home() {
   const events = await getAllEvents();
-
   const TopHosts = await getTopRatedHosts();
 
   return (

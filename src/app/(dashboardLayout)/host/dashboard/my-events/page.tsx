@@ -42,6 +42,7 @@ const MyEventsManagementPage = async ({
         <EventsTable
           events={eventResult.data || []}
           eventCategories={categoryResult.data || []}
+          mode={currentUser?.role}
         />
         <TablePagination
           currentPage={eventResult?.meta?.page || 1}

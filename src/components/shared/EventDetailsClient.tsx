@@ -78,8 +78,6 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
   const participantCount = event.eventParticipants?.length || 0;
   const spotsLeft = event.maxParticipants - participantCount;
 
-  console.log("check review", event);
-
   const hasReviewed = event.reviews?.some((review) => review.userId === userId);
 
   const canReview =
@@ -100,7 +98,6 @@ export function EventDetailsClient({ event, userId }: EventDetailsClientProps) {
       setActionLoading(true);
 
       const res = await joinEvent(event.id);
-      console.log(res.data);
 
       if (!res?.success) {
         toast.error(res?.message || "Failed to join event");

@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { IEvents } from "@/types/events.interface";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -27,9 +28,10 @@ function EventCard({ event }: EventCardProps) {
     <>
       <Card className="overflow-hidden group hover:shadow-xl transition-all">
         <div className="aspect-video relative overflow-hidden">
-          <img
+          <Image
             src={event.image || "/placeholder.svg?height=300&width=400"}
             alt={event.title}
+            fill
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           />
           <Badge className="absolute top-3 right-3 bg-background/90 text-foreground hover:bg-background/90">
