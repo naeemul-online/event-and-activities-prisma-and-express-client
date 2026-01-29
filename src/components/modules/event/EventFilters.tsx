@@ -6,6 +6,7 @@ import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
 import DateFilter from "@/components/ui/DateFilter";
 import { ICategory } from "@/types/events.interface";
+import { Suspense } from "react";
 
 interface EventsFilterProps {
   categories: ICategory[];
@@ -26,10 +27,11 @@ const EventFilters = ({ categories }: EventsFilterProps) => {
           }))}
         />
 
-        <DateFilter paramName="startDate" label="Start Date" />
-        <DateFilter paramName="endDate" label="End Date" />
-
-        <SearchFilter paramName="location" placeholder="Search by location" />
+        <Suspense fallback={<div>Loading...</div>}>
+          <DateFilter paramName="startDate" label="Start Date" />
+          <DateFilter paramName="endDate" label="End Date" />
+          <SearchFilter paramName="location" placeholder="Search by location" />
+        </Suspense>
 
         {/* Clear All Filters */}
         <div className="flex items-center gap-3">
@@ -37,7 +39,9 @@ const EventFilters = ({ categories }: EventsFilterProps) => {
           <RefreshButton />
         </div>
 
-        <ClearFiltersButton />
+        <Suspense fallback={<div>Loading...</div>}>
+          <ClearFiltersButton />
+        </Suspense>
       </div>
     </div>
   );

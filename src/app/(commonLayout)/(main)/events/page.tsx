@@ -32,10 +32,13 @@ const EventsPage = async ({
 
       <Suspense fallback={<EventsLoading />}>
         <EventCards events={eventResult.data || []} />
-        <TablePagination
-          currentPage={eventResult?.meta?.page || 1}
-          totalPages={totalPages || 1}
-        />
+
+        <Suspense fallback={<div>Loading...</div>}>
+          <TablePagination
+            currentPage={eventResult?.meta?.page || 1}
+            totalPages={totalPages || 1}
+          />
+        </Suspense>
       </Suspense>
     </div>
   );

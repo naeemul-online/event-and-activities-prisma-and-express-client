@@ -19,7 +19,6 @@ interface UserDropdownProps {
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
-  console.log(userInfo);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

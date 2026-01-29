@@ -20,7 +20,6 @@ interface MyProfileProps {
 }
 
 export default function MyProfile({ userInfo }: MyProfileProps) {
-  console.log(userInfo);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 

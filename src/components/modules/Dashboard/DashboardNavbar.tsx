@@ -6,6 +6,7 @@ import DashboardNavbarContent from "./DashboardNavbarContent";
 
 const DashboardNavbar = async () => {
   const userInfo = (await getUserInfo()) as UserInfo;
+  if (!userInfo) return null;
   const navItems = getNavItemsByRole(userInfo.role);
   const dashboardHome = getDefaultDashboardRoute(userInfo.role);
 
