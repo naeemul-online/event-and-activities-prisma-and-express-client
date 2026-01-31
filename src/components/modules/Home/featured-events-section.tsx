@@ -26,48 +26,49 @@ export function FeaturedEventsSection({
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {events.slice(0, 4).map((event, index) => (
-            <Card
-              key={index}
-              className="overflow-hidden group hover:shadow-xl transition-all"
-            >
-              <div className="aspect-video relative overflow-hidden">
-                <Image
-                  src={event.image || "/placeholder.svg"}
-                  alt={event.title}
-                  width={500}
-                  height={500}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                <Badge className="absolute top-3 right-3 bg-background/90 text-foreground">
-                  $ {event.fee}
-                </Badge>
-              </div>
-              <CardContent className="p-5 space-y-4">
-                <h3 className="font-semibold text-lg">{event.title}</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>
-                      {format(new Date(event.date), "EEEE, MMMM dd, yyyy")}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>{event.location}</span>
-                  </div>
+          {events &&
+            events.slice(0, 4).map((event, index) => (
+              <Card
+                key={index}
+                className="overflow-hidden group hover:shadow-xl transition-all"
+              >
+                <div className="aspect-video relative overflow-hidden">
+                  <Image
+                    src={event.image || "/placeholder.svg"}
+                    alt={event.title}
+                    width={500}
+                    height={500}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <Badge className="absolute top-3 right-3 bg-background/90 text-foreground">
+                    $ {event.fee}
+                  </Badge>
                 </div>
-                <div className="pt-2">
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {event.maxParticipants} spots left
-                  </p>
-                  <Link href={`/events/${event.id}`}>
-                    <Button className="w-full">Join Event</Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                <CardContent className="p-5 space-y-4">
+                  <h3 className="font-semibold text-lg">{event.title}</h3>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>
+                        {format(new Date(event.date), "EEEE, MMMM dd, yyyy")}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {event.maxParticipants} spots left
+                    </p>
+                    <Link href={`/events/${event.id}`}>
+                      <Button className="w-full">Join Event</Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
         </div>
       </div>
     </section>

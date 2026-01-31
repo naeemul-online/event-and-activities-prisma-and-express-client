@@ -46,7 +46,7 @@ const EventsFormDialog = ({
 
   // Change it to this:
   const [selectedFile, setSelectedFile] = useState<File | string | null>(
-    event?.image ? event.image : null
+    event?.image ? event.image : null,
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,7 +155,7 @@ const EventsFormDialog = ({
                 name="date"
                 type="datetime-local"
                 defaultValue={formatDateTime(
-                  state?.formData?.date || (isEdit ? event?.date : "")
+                  state?.formData?.date || (isEdit ? event?.date : ""),
                 )}
               />
               <InputFieldError field="date" state={state} />
@@ -287,8 +287,8 @@ const EventsFormDialog = ({
                   ? "Updating..."
                   : "Creating..."
                 : isEdit
-                ? "Update Event"
-                : "Create Event"}
+                  ? "Update Event"
+                  : "Create Event"}
             </Button>
           </div>
         </form>

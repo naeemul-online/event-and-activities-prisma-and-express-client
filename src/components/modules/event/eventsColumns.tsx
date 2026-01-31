@@ -6,7 +6,7 @@ import { IEvents } from "@/types/events.interface";
 import Image from "next/image";
 
 export const getEventsColumns = (
-  mode: "HOST" | "USER" | "ADMIN"
+  mode: "HOST" | "USER" | "ADMIN",
 ): Column<IEvents>[] => {
   const columns: Column<IEvents>[] = [
     {

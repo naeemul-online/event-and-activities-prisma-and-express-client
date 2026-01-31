@@ -3,37 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 
-// const hosts = [
-//   {
-//     name: "Sarah Chen",
-//     avatar: "/asian-woman-smiling-professional.jpg",
-//     rating: 4.9,
-//     events: 42,
-//     initials: "SC",
-//   },
-//   {
-//     name: "Marcus Johnson",
-//     avatar: "/black-man-smiling-friendly.jpg",
-//     rating: 5.0,
-//     events: 38,
-//     initials: "MJ",
-//   },
-//   {
-//     name: "Emily Rodriguez",
-//     avatar: "/latina-woman-smiling-cheerful.jpg",
-//     rating: 4.8,
-//     events: 56,
-//     initials: "ER",
-//   },
-//   {
-//     name: "David Park",
-//     avatar: "/asian-man-smiling-confident.jpg",
-//     rating: 4.9,
-//     events: 31,
-//     initials: "DP",
-//   },
-// ];
-
 interface TopHost {
   id: string;
   name: string;
@@ -56,33 +25,34 @@ export function HostsSection({ hosts }: { hosts: TopHost[] }) {
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {hosts.map((host) => (
-            <Card
-              key={host.id}
-              className="text-center hover:shadow-lg transition-all hover:-translate-y-1"
-            >
-              <CardContent className="pt-8 pb-6 space-y-4">
-                <Avatar className="w-20 h-20 mx-auto">
-                  <AvatarImage
-                    src={host.avatar || "/placeholder.svg"}
-                    alt={host.name}
-                  />
-                  <AvatarFallback>{host.initials}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">{host.name}</h3>
-                  <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-medium">{host.rating}</span>
+          {hosts &&
+            hosts.map((host) => (
+              <Card
+                key={host.id}
+                className="text-center hover:shadow-lg transition-all hover:-translate-y-1"
+              >
+                <CardContent className="pt-8 pb-6 space-y-4">
+                  <Avatar className="w-20 h-20 mx-auto">
+                    <AvatarImage
+                      src={host.avatar || "/placeholder.svg"}
+                      alt={host.name}
+                    />
+                    <AvatarFallback>{host.initials}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">{host.name}</h3>
+                    <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <span className="font-medium">{host.rating}</span>
+                    </div>
                   </div>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {host.events} events hosted
-                </p>
-                <Badge variant="secondary">Top Host</Badge>
-              </CardContent>
-            </Card>
-          ))}
+                  <p className="text-sm text-muted-foreground">
+                    {host.events} events hosted
+                  </p>
+                  <Badge variant="secondary">Top Host</Badge>
+                </CardContent>
+              </Card>
+            ))}
         </div>
       </div>
     </section>

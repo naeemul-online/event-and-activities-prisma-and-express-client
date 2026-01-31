@@ -19,14 +19,11 @@ const ManagementPageHeader = ({
   title,
   description,
   action,
-  children,
-  mode,
 }: ManagementPageHeaderProps) => {
   const Icon = action?.icon ?? Plus;
-  const canShowAction = mode === "HOST" && action;
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between  mb-6 ">
       <div>
         <h1 className="text-3xl font-bold">{title}</h1>
         {description && (
@@ -34,14 +31,12 @@ const ManagementPageHeader = ({
         )}
       </div>
 
-      {canShowAction && (
+      {action && (
         <Button onClick={action.onClick}>
           <Icon className="mr-2 h-4 w-4" />
           {action.label}
         </Button>
       )}
-
-      {children}
     </div>
   );
 };

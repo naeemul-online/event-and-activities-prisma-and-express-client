@@ -34,10 +34,6 @@ interface ManagementTableProps<T> {
   isRefreshing?: boolean;
 }
 
-// const ManagementTable<T> = (props: ManagementTableProps<T>) => {
-//   return <div>ManagementTable</div>;
-// };
-
 function ManagementTable<T>({
   data = [],
   columns = [],
@@ -49,8 +45,6 @@ function ManagementTable<T>({
   isRefreshing = false,
 }: ManagementTableProps<T>) {
   const hasActions = onView || onEdit || onDelete;
-
-  console.log("onEdit:", onEdit);
 
   return (
     <>

@@ -35,9 +35,9 @@ export default async function Home() {
         <HeroSection userInfo={userInfo || null} />
         <HowItWorksSection />
         <CategoriesSection />
-        <FeaturedEventsSection events={events.data} />
+        <FeaturedEventsSection events={events.data || null} />
         <FeaturesSection />
-        <HostsSection hosts={TopHosts?.data} />
+        <HostsSection hosts={TopHosts?.data || null} />
         <TestimonialsSection />
         <CTASection />
       </main>
