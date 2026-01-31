@@ -6,36 +6,39 @@ import { IUser } from "@/types/events.interface";
 import Image from "next/image";
 
 export const getUserColumns = (): Column<IUser>[] => {
-  const columns: Column<IUser>[] = [
+  return [
     {
       header: "Icon",
-      accessor: (user) => (
-        <Image
-          src={user.profile.image || "/placeholder-user.jpg"}
-          alt={user.profile.fullName}
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
-      ),
+      accessor: (user) => {
+        const image = user.profile?.image || "/placeholder-user.jpg";
+        const name = user.profile?.fullName || "Unknown User";
+
+        return (
+          <Image
+            src={image}
+            alt={name}
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
+        );
+      },
     },
     {
       header: "Name",
-      accessor: (user) => user.profile.fullName,
+      accessor: (user) => user.profile?.fullName ?? "—",
     },
     {
-      header: "email",
+      header: "Email",
       accessor: (user) => user.email,
     },
     {
       header: "Location",
-      accessor: (user) => user.profile.location,
+      accessor: (user) => user.profile?.location ?? "—",
     },
     {
       header: "Role",
       accessor: (user) => <Badge variant="outline">{user.role}</Badge>,
     },
   ];
-
-  return columns;
 };
