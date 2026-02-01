@@ -13,7 +13,7 @@ export const getEventsColumns = (
       header: "Icon",
       accessor: (event) => (
         <Image
-          src={event.image}
+          src={event?.image || "/placeholder.svg?height=40&width=40"}
           alt={event.title}
           width={40}
           height={40}

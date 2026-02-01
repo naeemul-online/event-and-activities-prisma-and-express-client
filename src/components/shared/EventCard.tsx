@@ -29,8 +29,8 @@ function EventCard({ event }: EventCardProps) {
       <Card className="overflow-hidden group hover:shadow-xl transition-all">
         <div className="aspect-video relative overflow-hidden">
           <Image
-            src={event.image || "/placeholder.svg?height=300&width=400"}
-            alt={event.title}
+            src={event?.image || "/placeholder.svg?height=300&width=400"}
+            alt={event?.title}
             fill
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           />
@@ -40,7 +40,7 @@ function EventCard({ event }: EventCardProps) {
           <Badge
             className={cn(
               "absolute top-3 left-3 backdrop-blur-sm",
-              statusColors[event.status]
+              statusColors[event.status],
             )}
           >
             {event.status}

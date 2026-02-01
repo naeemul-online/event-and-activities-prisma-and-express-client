@@ -140,6 +140,38 @@ export async function getAllUsers(queryString?: string) {
     };
   }
 }
+export async function getAllHosts(queryString?: string) {
+  try {
+    const searchParams = new URLSearchParams(queryString);
+    const page = searchParams.get("page") || "1";
+    const searchTerm = searchParams.get("searchTerm") || "all";
+    const response = await serverFetch.get(
+      `/hosts${queryString ? `?${queryString}` : ""}`,
+      {
+        next: {
+          tags: [
+            "hosts-list",
+            `hosts-page-${page}`,
+            `hosts-search-${searchTerm}`,
+          ],
+          revalidate: 180, // faster hosts list updates
+        },
+      },
+    );
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+}
 
 export async function singleUser(id: string) {
   try {

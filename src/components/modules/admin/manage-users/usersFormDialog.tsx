@@ -50,7 +50,7 @@ const UsersFormDialog = ({
     const loadInterests = async () => {
       try {
         const data = await fetchInterests();
-        console.log(data);
+
         setInterests(data.data);
       } catch (error) {
         toast.error("Failed to load interests.");

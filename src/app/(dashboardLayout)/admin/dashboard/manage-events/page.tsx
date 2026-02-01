@@ -4,6 +4,7 @@ import EventsTable from "@/components/modules/event/eventsTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
+import { getUserInfo } from "@/services/auth/getUserInfo";
 import {
   getAllEvents,
   getEventCategories,
@@ -24,18 +25,23 @@ const EventsManagementPage = async ({
   const categoryResult = await getEventCategories();
 
   const totalPages = Math.ceil(
-    (eventResult?.meta?.total || 1) / (eventResult?.meta?.limit || 1)
+    (eventResult?.meta?.total || 1) / (eventResult?.meta?.limit || 1),
   );
+  const currentUser = await getUserInfo();
 
   return (
     <div className="space-y-6">
-      <EventManagementPageHeader eventCategories={categoryResult.data || []} />
+      <EventManagementPageHeader
+        eventCategories={categoryResult.data || []}
+        mode={currentUser?.role}
+      />
       <EventFilters categories={categoryResult?.data || []} />
 
       <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
         <EventsTable
           events={eventResult.data || []}
           eventCategories={categoryResult.data || []}
+          mode={currentUser?.role}
         />
         <TablePagination
           currentPage={eventResult?.meta?.page || 1}

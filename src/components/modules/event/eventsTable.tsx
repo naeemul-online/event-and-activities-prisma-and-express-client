@@ -18,7 +18,7 @@ interface EventsTableProps {
 }
 
 const EventsTable = ({ events, eventCategories, mode }: EventsTableProps) => {
-  const isHost = mode === "HOST";
+  const isHost = mode === "HOST" || mode === "ADMIN";
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [deletingEvent, setDeletingEvent] = useState<IEvents | null>(null);

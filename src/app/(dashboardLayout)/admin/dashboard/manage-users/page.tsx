@@ -1,5 +1,5 @@
-import UsersManagementPageHeader from "@/components/modules/admin/usersPageHeader";
-import UsersTable from "@/components/modules/admin/usersTable";
+import UsersManagementPageHeader from "@/components/modules/admin/manage-users/usersPageHeader";
+import UsersTable from "@/components/modules/admin/manage-users/usersTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import UserFilters from "@/components/shared/usersFilters";
@@ -19,8 +19,6 @@ const ManageUsers = async ({
   const totalPages = Math.ceil(
     (users?.data?.meta.total || 1) / (users?.data?.meta.limit || 1),
   );
-
-  console.log(users?.data?.meta.total);
 
   return (
     <div>
