@@ -1,36 +1,176 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here is a clean, professional, and well-structured **README.md** for your **Events & Activities Platform (Frontend)** GitHub repository — ready to be used for a client project.
 
-## Getting Started
+```markdown
+# 🎯 Events & Activities Platform
 
-First, run the development server:
+**Connect. Discover. Experience.**  
+A modern **Next.js** social platform that helps people find companions for local events, sports, hobbies, concerts, meetups, board games, hikes, dinners — and anything in between.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+No more missing great events just because you don't have anyone to go with.
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcn/ui&logoColor=white)](https://ui.shadcn.com/)
+
+## ✨ Key Features
+
+### For Everyone
+- Browse & search events by category, date, location
+- View detailed event pages with host info & participant list
+- Join free or paid events
+- Responsive design (mobile + desktop)
+
+### User Role
+- Create and manage personal profile (interests, bio, avatar, location)
+- See joined & past events
+- Rate & review hosts after attending
+
+### Host Role
+- Create & edit events (with images, fees, min/max participants)
+- Manage participants
+- View revenue & event stats
+- Host dashboard with overview
+
+### Admin Role
+- Manage users, hosts & events
+- Moderate content
+- View system statistics & recent activity
+
+### Core Systems
+- JWT-based authentication + role-based access control
+- Secure file uploads (Cloudinary / ImgBB)
+- Payment integration ready (Stripe / local gateways)
+- Server Components + Services pattern
+- Form validation with **Zod** + **React Hook Form**
+
+## 🛠 Tech Stack
+
+| Layer             | Technology                          |
+|-------------------|-------------------------------------|
+| Framework         | Next.js 14 (App Router)             |
+| Language          | TypeScript                          |
+| Styling           | Tailwind CSS + shadcn/ui            |
+| Icons             | Lucide React                        |
+| Forms & Validation| React Hook Form + Zod               |
+| Data Fetching     | Server Components + fetch + services|
+| Auth              | JWT (backend-verified)              |
+| File Upload       | Cloudinary / ImgBB                  |
+| Payments          | Stripe / SSLCommerz / AmarPay (planned) |
+
+## 📂 Project Structure
+
+```text
+src/
+├── app/
+│   ├── (auth)/                 # login, register
+│   ├── (common)/               # public pages: home, events, event/[id]
+│   ├── (dashboard)/            # protected area with role-based layout
+│   │   ├── admin/              # admin dashboard + management pages
+│   │   ├── host/               # host dashboard + event management
+│   │   └── user/               # user dashboard + my events
+│   ├── payment/                # payment success/cancel pages
+│   └── layout.tsx              # root layout
+│
+├── components/
+│   ├── modules/                # feature-specific (EventCard, ProfileHeader…)
+│   ├── shared/                 # reusable (Button, Card, Dialog, Skeleton…)
+│   └── ui/                     # shadcn/ui components
+│
+├── services/
+│   ├── auth.ts
+│   ├── user.ts
+│   ├── event.ts
+│   ├── host.ts
+│   └── admin.ts
+│
+├── hooks/
+├── lib/
+│   └── utils.ts                # cn(), serverFetch(), etc.
+├── types/
+├── zod/                        # schemas
+└── assets/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js ≥ 18
+- Running backend API (with JWT endpoints)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+```bash
+# Clone the repo
+git clone https://github.com/naeemul-online/event-and-activities-prisma-and-express-client.git
+cd events-activities-platform
 
-To learn more about Next.js, take a look at the following resources:
+# Install dependencies
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Create .env.local
+cp .env.example .env.local
+# → fill NEXT_PUBLIC_API_URL, NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, etc.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Development
 
-## Deploy on Vercel
+```bash
+# Start dev server
+npm run dev
+# → http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔐 Environment Variables (.env.local)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+
+# Optional - for image uploads
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-preset
+
+# Stripe (if used)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_...
+```
+
+## 📌 Development Notes
+
+- **Server Components** are used by default
+- Mark interactive components with `"use client"` only when necessary
+- All API calls go through centralized **service** functions
+- Use `revalidateTag` / `revalidatePath` for cache invalidation
+- Dashboard pages prefer parallel data fetching (`Promise.all`)
+- Keep UI clean & logic in services
+
+## 🛣 Roadmap (Optional / Future)
+
+- Interactive map view of events
+- Calendar integration
+- Notifications (email + in-app)
+- Friend / follow system
+- Chat between participants
+- Advanced search & recommendations
+
+## 📄 License
+
+This project was built for **client demonstration / educational purposes**.
+
+Feel free to fork, modify and use as inspiration — but **do not use the branding / name in production** without permission.
+
+---
+
+Made with ❤️ for real-world connections  
+Questions? → Open an issue or reach out!
+```
+
+You can copy-paste this directly into your `README.md` file.
+
+Let me know if you'd like:
+
+- a shorter / more minimal version
+- more emphasis on screenshots / demo link section
+- backend README version
+- contribution guidelines added
+
+Good luck with the project! 🚀
