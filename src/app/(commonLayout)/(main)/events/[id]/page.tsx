@@ -20,7 +20,7 @@ export default async function EventDetailsPage({
 
   return (
     <div className="min-h-screen">
-      <main className="py-12">
+      <main className="py-18">
         <EventDetailsClient event={res.data} userId={currentUser?.id || ""} />
       </main>
     </div>

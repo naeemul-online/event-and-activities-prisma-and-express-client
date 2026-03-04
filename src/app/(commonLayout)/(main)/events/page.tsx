@@ -23,11 +23,11 @@ const EventsPage = async ({
   const categoryResult = await getEventCategories();
 
   const totalPages = Math.ceil(
-    (eventResult?.meta?.total || 1) / (eventResult?.meta?.limit || 1)
+    (eventResult?.meta?.total || 1) / (eventResult?.meta?.limit || 1),
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 py-18 ">
       <EventFilters categories={categoryResult?.data || []} />
 
       <Suspense fallback={<EventsLoading />}>

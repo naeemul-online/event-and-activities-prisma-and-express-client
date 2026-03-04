@@ -30,7 +30,7 @@ export function FeaturedEventsSection({
             events.slice(0, 4).map((event, index) => (
               <Card
                 key={index}
-                className="overflow-hidden group hover:shadow-xl transition-all"
+                className="overflow-hidden group hover:shadow-xl transition-all flex flex-col h-full"
               >
                 <div className="aspect-video relative overflow-hidden">
                   <Image
@@ -44,7 +44,7 @@ export function FeaturedEventsSection({
                     $ {event.fee}
                   </Badge>
                 </div>
-                <CardContent className="p-5 space-y-4">
+                <CardContent className="p-5 space-y-4 flex flex-col flex-1">
                   <h3 className="font-semibold text-lg">{event.title}</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export function FeaturedEventsSection({
                       <span>{event.location}</span>
                     </div>
                   </div>
-                  <div className="pt-2">
+                  <div className="pt-2 mt-auto">
                     <p className="text-sm text-muted-foreground mb-3">
                       {event.maxParticipants} spots left
                     </p>

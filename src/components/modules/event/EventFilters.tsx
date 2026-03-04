@@ -16,7 +16,7 @@ const EventFilters = ({ categories }: EventsFilterProps) => {
   return (
     <div className="space-y-3">
       {/* Row 2: Filter Controls - All on same line */}
-      <div className="flex items-center gap-3 flex-wrap">
+      <div className="p-4 md:p-8 flex flex-col md:flex-row  justify-start md:justify-between items-start md:items-center gap-3">
         {/* Category Filter */}
         <SelectFilter
           paramName="categoryId"

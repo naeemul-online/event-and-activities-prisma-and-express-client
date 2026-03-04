@@ -17,7 +17,7 @@ const RegisterForm = () => {
     { id: number; name: string }[]
   >([]);
   const [selectedInterests, setSelectedInterests] = React.useState<number[]>(
-    []
+    [],
   );
 
   const [role, setRole] = React.useState<"USER" | "HOST">("USER");
@@ -57,7 +57,7 @@ const RegisterForm = () => {
     <>
       <form action={formAction}>
         <FieldGroup>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {/* Name */}
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
@@ -83,7 +83,7 @@ const RegisterForm = () => {
             </Field>
 
             {/* Password */}
-            <Field className="md:col-span-2">
+            <Field className="">
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <Input id="password" name="password" type="password" />
 
@@ -91,7 +91,7 @@ const RegisterForm = () => {
             </Field>
 
             {/* Confirm Password */}
-            <Field className="md:col-span-2">
+            <Field className="">
               <FieldLabel htmlFor="confirmPassword">
                 Confirm Password
               </FieldLabel>

@@ -1,22 +1,30 @@
-import { CategoriesSection } from "@/components/modules/Home/category-section";
-import { CTASection } from "@/components/modules/Home/cta-section";
-import { FeaturedEventsSection } from "@/components/modules/Home/featured-events-section";
-import { FeaturesSection } from "@/components/modules/Home/features-section";
-import { HeroSection } from "@/components/modules/Home/hero-section";
-
-import { HostsSection } from "@/components/modules/Home/hosts-section";
-import { HowItWorksSection } from "@/components/modules/Home/how-its-work";
-import { TestimonialsSection } from "@/components/modules/Home/testimonials-section";
+import { CategoriesSection } from "@/components/modules/landing/categories-section";
+import { CTASection } from "@/components/modules/landing/cta-section";
+import { FeaturedEventsSection } from "@/components/modules/landing/featured-events-section";
+import { FeaturesSection } from "@/components/modules/landing/features-section";
+import { Footer } from "@/components/modules/landing/footer";
+import { HeroSection } from "@/components/modules/landing/hero-section";
+import { HostsSection } from "@/components/modules/landing/hosts-section";
+import { HowItWorksSection } from "@/components/modules/landing/how-it-works-section";
+import { Navbar } from "@/components/modules/landing/navbar";
+import { TestimonialsSection } from "@/components/modules/landing/testimonials-section";
+import { getDefaultDashboardRoute } from "@/lib/auth-utils";
 import { getUserInfo } from "@/services/auth/getUserInfo";
+import { getCookie } from "@/services/auth/tokenHandlers";
 import { getAllEvents } from "@/services/event/eventsManagements";
-import { getTopRatedHosts } from "@/services/hosts/host.service";
 
 import Head from "next/head";
 
 export default async function Home() {
   const events = await getAllEvents();
-  const TopHosts = await getTopRatedHosts();
+
   const userInfo = (await getUserInfo()) || null;
+
+  const accessToken = await getCookie("accessToken");
+
+  const dashboardRoute = userInfo
+    ? getDefaultDashboardRoute(userInfo.role)
+    : "/";
 
   return (
     <>
@@ -31,16 +39,25 @@ export default async function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {/* <PublicNavbar /> */}
+      <Navbar
+        initialHasToken={!!accessToken}
+        initialUserInfo={userInfo}
+        initialDashboardRoute={dashboardRoute}
+      />
+
       <main>
         <HeroSection userInfo={userInfo || null} />
         <HowItWorksSection />
         <CategoriesSection />
         <FeaturedEventsSection events={events.data || null} />
         <FeaturesSection />
-        <HostsSection hosts={TopHosts?.data || null} />
+        <HostsSection />
         <TestimonialsSection />
         <CTASection />
       </main>
+      <Footer />
     </>
   );
 }

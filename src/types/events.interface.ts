@@ -61,7 +61,7 @@ export interface IEvents {
   maxParticipants: number;
   eventParticipants?: IEventParticipant[];
   categoryId: string;
-  fee: string; // Note: In the JSON this is a string "100"
+  fee: string | number; // Note: In the JSON this is a string "100"
   currency: string;
   image: string;
   status: "OPEN" | "FULL" | "CANCELLED";
