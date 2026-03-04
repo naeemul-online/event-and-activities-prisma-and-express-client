@@ -35,7 +35,7 @@ export function FeaturedEventsSection({
                 <div className="aspect-video relative overflow-hidden">
                   <Image
                     src={event.image || "/placeholder.svg"}
-                    alt={event.title}
+                    alt={event.title || "Event Image"}
                     width={500}
                     height={500}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
@@ -45,7 +45,9 @@ export function FeaturedEventsSection({
                   </Badge>
                 </div>
                 <CardContent className="p-5 space-y-4 flex flex-col flex-1">
-                  <h3 className="font-semibold text-lg">{event.title}</h3>
+                  <h3 className="font-semibold text-lg">
+                    {event.title || "Untitled Event"}
+                  </h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
@@ -55,7 +57,7 @@ export function FeaturedEventsSection({
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
-                      <span>{event.location}</span>
+                      <span>{event.location || "Unknown Location"}</span>
                     </div>
                   </div>
                   <div className="pt-2 mt-auto">

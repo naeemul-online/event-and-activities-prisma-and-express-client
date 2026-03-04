@@ -129,7 +129,7 @@ export function FeaturedEventsSection({
               <div className="aspect-[4/3] relative overflow-hidden">
                 <Image
                   src={event.image}
-                  alt={event.title}
+                  alt={event.title || "Event Image"}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />

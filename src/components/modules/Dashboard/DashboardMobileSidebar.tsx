@@ -40,7 +40,7 @@ const DashboardMobileSidebar = ({
             <div key={sectionIdx}>
               {section.title && (
                 <h4 className="mb-2 px-3 text-xs font-semibold text-muted-foreground uppercase">
-                  {section.title}
+                  {section.title || "Section Title"}
                 </h4>
               )}
               <div className="space-y-1">
@@ -60,7 +60,7 @@ const DashboardMobileSidebar = ({
                       )}
                     >
                       <Icon className="h-4 w-4" />
-                      <span className="flex-1">{item.title}</span>
+                      <span className="flex-1">{item.title || "Untitled Item"}</span>
                       {item.badge && (
                         <Badge variant={isActive ? "secondary" : "default"}>
                           {item.badge}

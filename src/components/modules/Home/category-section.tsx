@@ -52,9 +52,11 @@ export function CategoriesSection() {
                     <category.icon className="w-7 h-7 text-primary" />
                   </div>
                   <div className="space-y-2">
-                    <CardTitle className="text-lg">{category.title}</CardTitle>
+                    <CardTitle className="text-lg">
+                      {category.title || "Untitled Category"}
+                    </CardTitle>
                     <Badge variant="secondary" className="w-fit">
-                      {category.badge}
+                      {category.badge || "Default Badge"}
                     </Badge>
                   </div>
                 </CardHeader>

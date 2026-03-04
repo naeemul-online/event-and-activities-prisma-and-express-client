@@ -103,7 +103,7 @@ export function CategoriesSection() {
                 >
                   <Image
                     src={category.image}
-                    alt={category.title}
+                    alt={category.title || "Category Image"}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -117,10 +117,10 @@ export function CategoriesSection() {
                       </div>
                     </div>
                     <h3 className="font-bold text-background text-lg">
-                      {category.title}
+                      {category.title || "Untitled Category"}
                     </h3>
                     <p className="text-background/70 text-sm">
-                      {category.count}
+                      {category.count || "0 events"}
                     </p>
                   </div>
 

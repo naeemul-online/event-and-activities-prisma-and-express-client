@@ -14,7 +14,7 @@ export const getEventsColumns = (
       accessor: (event) => (
         <Image
           src={event?.image || "/placeholder.svg?height=40&width=40"}
-          alt={event.title}
+          alt={event.title || "Event Image"}
           width={40}
           height={40}
           className="rounded-full"
@@ -23,11 +23,11 @@ export const getEventsColumns = (
     },
     {
       header: "Title",
-      accessor: (event) => event.title,
+      accessor: (event) => event.title || "Untitled Event",
     },
     {
       header: "Location",
-      accessor: (event) => event.location,
+      accessor: (event) => event.location || "Unknown Location",
     },
     {
       header: "Date",

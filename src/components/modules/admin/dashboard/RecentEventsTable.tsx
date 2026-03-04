@@ -14,7 +14,7 @@ export default async function RecentEventsTable() {
         <ul className="space-y-3">
           {data.map((event: IEvent) => (
             <li key={event.id} className="flex justify-between text-sm">
-              <span>{event.title}</span>
+              <span>{event.title || "Untitled Event"}</span>
               <span className="text-muted-foreground">
                 {new Date(event.date).toLocaleDateString()}
               </span>
