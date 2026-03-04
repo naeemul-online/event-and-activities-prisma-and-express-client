@@ -140,7 +140,7 @@ export function FeaturedEventsSection({
 
               <div className="p-5 space-y-4">
                 <h3 className="font-bold text-lg text-card-foreground group-hover:text-primary transition-colors">
-                  {event.title}
+                  {event.title || "Untitled Event"}
                 </h3>
 
                 <div className="space-y-2 text-sm text-muted-foreground">
