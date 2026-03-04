@@ -13,7 +13,10 @@ const mockEvents = [
     id: "1",
     title: "Summer Jazz Festival",
     image: "/images/category-music.jpg",
-    date: "2026-03-15",
+    description:
+      "An open-air evening featuring world-class jazz ensembles and local food vendors under the stars.",
+    startDate: "2026-03-15T18:00:00",
+    endDate: "2026-03-15T23:00:00",
     location: "Central Park, NYC",
     fee: 25,
     maxParticipants: 8,
@@ -22,7 +25,10 @@ const mockEvents = [
     id: "2",
     title: "Mountain Trail Adventure",
     image: "/images/category-hiking.jpg",
-    date: "2026-03-20",
+    description:
+      "A guided 10-mile hike through the scenic Blue Ridge ridges. Moderate difficulty, breathtaking views guaranteed.",
+    startDate: "2026-03-20T07:00:00",
+    endDate: "2026-03-20T16:00:00",
     location: "Blue Ridge Mountains",
     fee: 15,
     maxParticipants: 5,
@@ -31,7 +37,10 @@ const mockEvents = [
     id: "3",
     title: "Board Game Championship",
     image: "/images/category-gaming.jpg",
-    date: "2026-03-22",
+    description:
+      "Compete in a round-robin tournament of strategy classics. Prizes for the top three tacticians!",
+    startDate: "2026-03-22T13:00:00",
+    endDate: "2026-03-22T19:00:00",
     location: "The Game Lounge, SF",
     fee: 10,
     maxParticipants: 12,
@@ -40,13 +49,15 @@ const mockEvents = [
     id: "4",
     title: "Tech Startup Meetup",
     image: "/images/category-tech.jpg",
-    date: "2026-03-25",
+    description:
+      "Network with founders, investors, and developers. A casual evening of pitches and partnership building.",
+    startDate: "2026-03-25T19:00:00",
+    endDate: "2026-03-25T21:30:00",
     location: "Innovation Hub, Austin",
     fee: 0,
     maxParticipants: 30,
   },
 ];
-
 interface FeaturedEventsSectionPropsType {
   events: IEvents[];
 }
