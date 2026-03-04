@@ -51,7 +51,7 @@ export default async function Home() {
         <HeroSection userInfo={userInfo || null} />
         <HowItWorksSection />
         <CategoriesSection />
-        <FeaturedEventsSection events={events.data || null} />
+        <FeaturedEventsSection events={events.data || []} />
         <FeaturesSection />
         <HostsSection />
         <TestimonialsSection />
